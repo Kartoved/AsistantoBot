@@ -1,0 +1,9 @@
+/for me/
+/user_info/
+/.vscode/
+.env
+venv/
+.test.py
+__pycache__/
+.mypy_cache/
+
