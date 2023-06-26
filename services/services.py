@@ -79,43 +79,43 @@ def create_inline_kbJ(width: int,
 
 def import_joys_list() -> list:
     '''импортирует список кайфов из файла'''
-    with open('user_info/summer_joys.json') as f:
-        summer_joys: list = json.load(f)
-        return summer_joys
+    with open('user_info/joys.json') as f:
+        joys: list = json.load(f)
+        return joys
 
 
-def export_joys_list(summer_joys, new_joy=''):
+def export_joys_list(joys, new_joy=''):
     '''экспортирует список кайфов в json'''
-    with open('user_info/summer_joys.json', 'w') as f:
-        summer_joys += new_joy
-        json.dump(list(set(summer_joys)), f, ensure_ascii=False)
+    with open('user_info/joys.json', 'w') as f:
+        joys += new_joy
+        json.dump(sorted(list(set(joys))), f, ensure_ascii=False)
 
 
 def import_completed_joys() -> str:
-    with open('user_info/completed_joys.txt') as f:
-        completed_joys = f.read()
+    with open('user_info/completed_joys.json') as f:
+        completed_joys = json.load(f)
     return completed_joys
 
 
-def export_comleted_joys(completed_joy: str):
-    with open('user_info/completed_joys.txt', 'a') as f:
-        f.write(f'✅ {completed_joy}\n')
+def export_completed_joys(completed_joys: list):
+    with open('user_info/completed_joys.json', 'w') as f:
+        json.dump(completed_joys, f, ensure_ascii=False)
 
 
 def add_joy(text: str):
     '''добавляет кайфы в список кайфов'''
-    summer_joys: list = import_joys_list()
+    joys: list = import_joys_list()
     new_joys: list = text.split('\n')
     try:
         new_joys.remove('Кайфы')
     except ValueError:
         new_joys.remove('кайфы')
-    export_joys_list(summer_joys, new_joys)
+    export_joys_list(joys, new_joys)
 
 
 def completed_joys(joy: str) -> list:
     '''выполненный кайф'''
-    summer_joys: list = import_joys_list()
-    summer_joys.remove(joy)
-    export_joys_list(summer_joys)
-    return summer_joys
+    joys: list = import_joys_list()
+    joys.remove(joy)
+    export_joys_list(joys)
+    return joys
