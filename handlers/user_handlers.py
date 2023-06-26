@@ -106,8 +106,9 @@ async def show_completed_joys(message: Message):
     joys_string: str = ''
     for joy in completed_joys:
         joys_string += f'{completed_joys.index(joy)+1}) {joy}\n'
-    await message.answer(text=f'✅ Ваш список выполненных кайфов:\n{joys_string}\
-        \nВсего выполнено кайфов: {len(completed_joys)}')
+    await message.answer(text=f'✅ Всего выполнено кайфов: \
+<em>{len(completed_joys)}/{len(completed_joys+s.import_joys_list())}</em>\
+        \n\nВаш список выполненных кайфов:\n{joys_string}')
 
 
 @router.message(Command(commands=['get_random_joy']), IsAdmin(admin_ids))
