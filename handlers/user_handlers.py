@@ -86,7 +86,9 @@ async def done_joy(message: Message):
     completed_joys = s.import_completed_joys()
     s.export_joys_list(joys_list)
     s.export_completed_joys(completed_joys | new_joys)
-    await message.answer(text=f'✅ Выполнено:\n{joys_string}')
+    for user in admin_ids:
+        await bot.send_message(chat_id=user,
+                               text=f'✅ Выполнено:\n{joys_string}')
 
 
 @router.message(Command(commands=['show_joys']), IsAdmin(admin_ids))
