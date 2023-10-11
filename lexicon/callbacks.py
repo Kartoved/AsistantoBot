@@ -1,8 +1,8 @@
 '''коллбэки'''
 
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import Text, BaseFilter
+from aiogram.filters import BaseFilter
 import services.services as s
 from config_data.config import bot
 
@@ -19,7 +19,7 @@ class IsAdmin(BaseFilter):
         return message.from_user.id in self.admin_ids
 
 
-@router.callback_query(Text(endswith=['delP']), IsAdmin(admin_ids))
+@router.callback_query(F.text(endswith=['delP']), IsAdmin(admin_ids))
 async def delete_product(callback: CallbackQuery):
     '''удаление продукта из списка при нажатии на кнопку'''
     await callback.answer('')

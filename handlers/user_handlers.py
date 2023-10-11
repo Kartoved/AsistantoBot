@@ -1,8 +1,8 @@
 '''хендлеры'''
 
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import Message, InlineQuery, InputTextMessageContent, InlineQueryResultArticle
-from aiogram.filters import Command, Text, BaseFilter
+from aiogram.filters import Command, BaseFilter
 from config_data.config import bot
 import services.services as s
 from random import choice
@@ -20,15 +20,15 @@ class IsAdmin(BaseFilter):
     async def __call__(self, message: Message) -> bool:
         return message.from_user.id in self.admin_ids
 
-
+# , 
 @router.message(Command(commands=['start']), IsAdmin(admin_ids))
 async def process_start_command(message: Message):
     '''запуск бота, создание необходимых файлов'''
-    pass
+    print(message.chat.id)
 
 
 # продукты
-@router.message(Text(startswith={'продукты'}, ignore_case=True), IsAdmin(admin_ids))
+@router.message(F.text(startswith={'продукты'}, ignore_case=True), IsAdmin(admin_ids))
 async def add_product(message: Message):
     '''добавление продукта в список продуктов'''
     s.add_product(text=message.text)
@@ -52,7 +52,7 @@ async def show_products_list(message: Message):
 
 
 # кайфы
-@router.message(Text(startswith={'кайфы'}, ignore_case=True), IsAdmin(admin_ids))
+@router.message(F.text(startswith={'кайфы'}, ignore_case=True), IsAdmin(admin_ids))
 async def add_joy(message: Message):
     '''добавление кайфов в список кайфов'''
     s.add_joy(text=message.text)
@@ -67,7 +67,7 @@ async def add_joy(message: Message):
                                text=f'📋 Ваш список кайфов: {joys_string}')
 
 
-@router.message(Text(startswith={'выполнить'}, ignore_case=True), IsAdmin(admin_ids))
+@router.message(F.text(startswith={'выполнить'}, ignore_case=True), IsAdmin(admin_ids))
 async def done_joy(message: Message):
     joys_list = s.import_joys_list()
     new_completed_joys = message.text.split('\n')
