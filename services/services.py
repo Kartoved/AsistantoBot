@@ -46,10 +46,7 @@ def add_product(text: str):
     '''добавляет продукт в список подуктов'''
     products_list: list = import_products_list()
     new_products: list = text.split('\n')
-    try:
-        new_products.remove('Продукты')
-    except ValueError:
-        new_products.remove('продукты')
+    new_products.remove('купить')
     export_products_list(products_list, new_products)
 
 
