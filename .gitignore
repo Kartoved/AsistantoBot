@@ -1,6 +1,5 @@
 /for me/
-user_info/ids.json
-user_info/produсt_list.json
+user_info/
 /.vscode/
 .env
 venv/
